@@ -21,7 +21,7 @@ const FilterPositions = () => {
                        }
                        }/>
                 <div
-                    className={`flex h-full cursor-pointer items-center justify-center py-2 px-3.5 text-sm font-bold text-gray-700 ${peerChecked} peer-checked:text-white cursor-pointer`}>
+                    className={`flex h-full cursor-pointer items-center justify-center py-2 px-3.5 text-sm font-medium text-gray-400 ${peerChecked} peer-checked:text-white cursor-pointer`}>
                     {label}
                 </div>
             </label>

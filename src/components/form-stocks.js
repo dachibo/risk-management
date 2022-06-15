@@ -1,21 +1,20 @@
-import {FilterPositions} from "./field-filter-positions";
-import {setCountContract, setDeposit, setItems, setPriceOpen, setStopLoss} from "../store/dataReducer";
-import {FieldInput} from "./field-input";
-import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
+import {setCountContract, setDeposit, setItems, setPriceOpen, setStopLoss} from "../store/dataReducer";
+import {FilterPositions} from "./field-filter-positions";
+import {FieldInput} from "./field-input";
 
-
-const FormFutures = () => {
+const FormStocks = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        fetch(`https://iss.moex.com/iss/engines/futures/markets/forts/securities.json`)
+        fetch(`https://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities.json`)
             .then(res => res.json())
             .then(
                 (result) => {
                     dispatch(setItems(result.securities.data));
                 })
     }, [dispatch]);
+
     const {
         secid,
         position,
@@ -25,18 +24,14 @@ const FormFutures = () => {
         stopLoss
     } = useSelector(state => state.positionInfo);
 
-    const {
-        initialMargin,
-        minStep,
-        stepPrice,
-    } = useSelector(state => state.futuresInfo)
+    const lotSize = useSelector(state => state.stocksInfo.lotSize)
 
     const sizePosition = secid !== null && countContract !== null ?
-        (initialMargin * countContract).toFixed(2) : ''
+        (lotSize * countContract * priceOpen).toFixed(2) : ''
     const pointStopLoss = priceOpen !== null && stopLoss !== null ?
         (position === "long" ? priceOpen - stopLoss : stopLoss - priceOpen).toFixed(2) : ''
     const potentialLoss = pointStopLoss !== '' && countContract !== null ?
-        ((pointStopLoss / minStep * stepPrice) * countContract).toFixed(2) : ''
+        (pointStopLoss * countContract * priceOpen).toFixed(2) : ''
     const potentialLossPercent = deposit !== null && potentialLoss !== '' ?
         (potentialLoss / deposit * 100).toFixed(2) : ''
 
@@ -50,10 +45,12 @@ const FormFutures = () => {
                 <FieldInput name={"Стоп-лосс"} editValueField={setStopLoss}/>
             </div>
             <div className="col-span-8 md:col-span-4">
-                <FieldInput id={"go"} name={"Требуемое ГО, руб."} editable={true} value={initialMargin}/>
+                <FieldInput id={"lot_size"} name={"Размер лота, шт."} editable={true}
+                            value={lotSize}/>
                 <FieldInput id={"count_positions"} name={"Размер позиции, руб."} editable={true}
                             value={sizePosition}/>
-                <FieldInput id={"stop_loss_p"} name={"Стоп-лосс, п."} editable={true} value={pointStopLoss}/>
+                <FieldInput id={"stop_loss_p"} name={"Стоп-лосс, п."} editable={true}
+                            value={pointStopLoss}/>
                 <FieldInput id={"potential_loss"} name={"Потенциальный убыток, руб."} editable={true}
                             value={potentialLoss}/>
                 <FieldInput id={"percent_deposit"} name={"Потенциальный убыток, %"} editable={true}
@@ -63,4 +60,4 @@ const FormFutures = () => {
     );
 };
 
-export {FormFutures};
+export {FormStocks}

@@ -3,7 +3,7 @@ import React from "react";
 
 const FieldInput = ({id, name, value, editable = false, editValueField}) => {
     const dispatch = useDispatch();
-    const mt = id === "go" ? null : "mt-6"
+    const mt = id === "go" || id === "lot_size" ? null : "mt-6"
     return (
         <div className={`${mt} relative`}>
             <input id={id} key={id} type="number"

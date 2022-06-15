@@ -1,22 +1,23 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 const dataState = {
-    selectType: "Фьючерсы",
     items: [],
-    isOpen: false,
-    shortname: '',
-    formEdited: {
+    selectType: 'Фьючерсы',
+    positionInfo: {
         secid: null,
-        minStep: null,
-        stepPrice: null,
         position: 'long',
         deposit: null,
         priceOpen: null,
         countContract: null,
         stopLoss: null
     },
-    formCalculate: {
+    futuresInfo: {
         initialMargin: '',
+        minStep: null,
+        stepPrice: null,
+    },
+    stocksInfo: {
+        lotSize: ''
     },
 };
 
@@ -24,46 +25,64 @@ const dataSlice = createSlice({
     name: 'dataCalc',
     initialState: dataState,
     reducers: {
+        setSelectType(state, action) {
+            state.selectType = action.payload
+        },
         setItems(state, action) {
             state.items = action.payload
         },
-        setSpecification(state, action) {
-            state.isOpen = action.payload.isOpen
-            state.shortname = action.payload.shortname
-            state.formEdited.secid = action.payload.secid
-            state.formEdited.minStep = action.payload.minStep
-            state.formEdited.stepPrice = action.payload.stepPrice
+        setSecid(state, action) {
+            state.positionInfo.secid = action.payload
         },
         setPositions(state, action) {
-            state.formEdited.position = action.payload
+            state.positionInfo.position = action.payload
         },
         setDeposit(state, action) {
-            state.formEdited.deposit = action.payload
+            state.positionInfo.deposit = action.payload
         },
         setPriceOpen(state, action) {
-            state.formEdited.priceOpen = action.payload
+            state.positionInfo.priceOpen = action.payload
         },
         setCountContract(state, action) {
-            state.formEdited.countContract = action.payload
+            state.positionInfo.countContract = action.payload
         },
         setStopLoss(state, action) {
-            state.formEdited.stopLoss = action.payload
+            state.positionInfo.stopLoss = action.payload
         },
-        setInitialMargin(state, action) {
-            state.formCalculate.initialMargin = action.payload
-        }
+        setSpecificationFutures(state, action) {
+            state.futuresInfo.initialMargin = action.payload.initialMargin
+            state.futuresInfo.minStep = action.payload.minStep
+            state.futuresInfo.stepPrice = action.payload.stepPrice
+        },
+        setSpecificationsStocks(state, action) {
+            state.stocksInfo.lotSize = action.payload.lotSize
+        },
+        setAllNull(state, action) {
+            state.positionInfo.secid = action.payload.secid
+            state.positionInfo.deposit = action.payload.deposit
+            state.positionInfo.priceOpen = action.payload.priceOpen
+            state.positionInfo.countContract = action.payload.countContract
+            state.positionInfo.stopLoss = action.payload.stopLoss
+            state.futuresInfo.initialMargin = action.payload.initialMargin
+            state.futuresInfo.minStep = action.payload.minStep
+            state.futuresInfo.stepPrice = action.payload.stepPrice
+            state.stocksInfo.lotSize = action.payload.lotSize
+        },
     }
 });
 
 export const {
+    setSelectType,
     setItems,
     setPositions,
     setDeposit,
     setPriceOpen,
     setCountContract,
     setStopLoss,
-    setSpecification,
-    setInitialMargin,
+    setSecid,
+    setSpecificationFutures,
+    setSpecificationsStocks,
+    setAllNull
 } = dataSlice.actions;
 
 export default dataSlice.reducer;
