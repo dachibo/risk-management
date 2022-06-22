@@ -1,18 +1,14 @@
 *** Settings ***
 Library     SeleniumLibrary
-
-
-*** Variables ***
-${BASE URL}     https://localhost:3000
-${BROWSER}      Chrome
+Resource    resources/CommonFunctionality.robot
 
 
 *** Test Cases ***
 Valid Future Calculate Short
     Start TestCase
     Input Ticker
-    Input Value Positions Info
     Click Position Short
+    Input Value Positions Info
     Check Field GO
     Check Field Count Position
     Check Field StopLossP
@@ -22,18 +18,11 @@ Valid Future Calculate Short
 
 
 *** Keywords ***
-Start TestCase
-    Set Selenium Speed    0.2
-    Open Browser    ${BASE URL}    ${BROWSER}
-    Maximize Browser Window
-
 Input Ticker
     Input Text    id=search_ticker    BR
     Wait Until Element Is Visible    //ul[1]
     Click Element    //li[starts-with(text(), "Фьючерс")][1]
 
-Click Position Short
-    Click Element    //div[text() = 'Шорт']
 Input Value Positions Info
     Input Text    //label[text()="Сумма депозита"]/preceding-sibling::input    300000
     Input Text    //label[text()="Цена входа"]/preceding-sibling::input    119,70
@@ -61,6 +50,3 @@ Check Field PotentialLossPercent
     ${calc-percent}=    Evaluate    ${potential-loss}/300000*100
     ${convert-calc}=    Convert To Number    ${calc-percent}    2
     Should Be True    ${percent-deposit} == ${convert-calc}
-
-Finish TestCase
-    Close Browser

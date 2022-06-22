@@ -2,13 +2,13 @@
 Library     SeleniumLibrary
 Resource    resources/CommonFunctionality.robot
 
-
 *** Test Cases ***
-Valid Future Calculate Long
+Valid Stock Calculate Long
     Start TestCase
+    Select Stocks
     Input Ticker
     Input Value Positions Info
-    Check Field GO
+    Check Field Lot Size
     Check Field Count Position
     Check Field StopLossP
     Check Field PotentialLoss
@@ -17,10 +17,14 @@ Valid Future Calculate Long
 
 
 *** Keywords ***
+Select Stocks
+    Click Element    id=dropdown-button
+    Click Element    //li[text() = 'Акции']
+
 Input Ticker
-    Input Text    id=search_ticker    BR
+    Input Text    id=search_ticker    Сбербанк
     Wait Until Element Is Visible    //ul[1]
-    Click Element    //li[starts-with(text(), "Фьючерс")][1]
+    Click Element    //li[starts-with(text(), "Сбербанк")][1]
 
 Input Value Positions Info
     Input Text    //label[text()="Сумма депозита"]/preceding-sibling::input    300000
@@ -28,13 +32,13 @@ Input Value Positions Info
     Input Text    //label[text()="Количество контрактов"]/preceding-sibling::input    15
     Input Text    //label[text()="Стоп-лосс"]/preceding-sibling::input    119,70
 
-Check Field GO
-    Should Not Be Empty    id=go
+Check Field Lot Size
+    Should Not Be Empty    id=lot_size
 
 Check Field Count Position
     ${count}=    Get Value    id=count_positions
-    ${go}=    Get Value    id=go
-    Should Be True    ${count} == 15*${go}
+    ${lot-size}=    Get Value    id=lot_size
+    Should Be True    ${count} == 120,30*15*${lot-size}
 
 Check Field StopLossP
     ${stop-loss-p}=    Get Value    id=stop_loss_p
