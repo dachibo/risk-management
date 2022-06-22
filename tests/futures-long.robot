@@ -1,11 +1,12 @@
 *** Settings ***
-Library     SeleniumLibrary
+Library    SeleniumLibrary
 Resource    resources/CommonFunctionality.robot
 
+Test Setup    Start TestCase
+Test Teardown    Finish TestCase
 
 *** Test Cases ***
 Valid Future Calculate Long
-    Start TestCase
     Input Ticker
     Input Value Positions Info
     Check Field GO
@@ -13,7 +14,6 @@ Valid Future Calculate Long
     Check Field StopLossP
     Check Field PotentialLoss
     Check Field PotentialLossPercent
-    Finish TestCase
 
 
 *** Keywords ***

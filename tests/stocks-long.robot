@@ -1,10 +1,12 @@
 *** Settings ***
-Library     SeleniumLibrary
+Library    SeleniumLibrary
 Resource    resources/CommonFunctionality.robot
+
+Test Setup    Start TestCase
+Test Teardown    Finish TestCase
 
 *** Test Cases ***
 Valid Stock Calculate Long
-    Start TestCase
     Select Stocks
     Input Ticker
     Input Value Positions Info
@@ -13,7 +15,6 @@ Valid Stock Calculate Long
     Check Field StopLossP
     Check Field PotentialLoss
     Check Field PotentialLossPercent
-    Finish TestCase
 
 
 *** Keywords ***

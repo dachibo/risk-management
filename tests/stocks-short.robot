@@ -1,11 +1,12 @@
 *** Settings ***
-Library     SeleniumLibrary
+Library    SeleniumLibrary
 Resource    resources/CommonFunctionality.robot
 
+Test Setup    Start TestCase
+Test Teardown    Finish TestCase
 
 *** Test Cases ***
 Valid Stock Calculate Short
-    Start TestCase
     Select Stocks
     Input Ticker
     Click Position Short
@@ -15,7 +16,6 @@ Valid Stock Calculate Short
     Check Field StopLossP
     Check Field PotentialLoss
     Check Field PotentialLossPercent
-    Finish TestCase
 
 
 *** Keywords ***
