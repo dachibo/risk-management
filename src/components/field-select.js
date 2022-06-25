@@ -25,7 +25,7 @@ const FieldSelect = () => {
 
     const blockTypes = isOpenSelectTypes ? (
         <ul className="absolute max-h-32 py-2 px-4 overflow-auto bg-white z-50 rounded-lg shadow-lg mt-1 text-sm text-gray-700">
-            <li className="py-2  font-medium whitespace-nowrap">Московская биржа</li>
+            <li className="py-2 font-medium whitespace-nowrap">Московская биржа</li>
             <li className="py-2 px-4 font-normal whitespace-nowrap hover:bg-gray-100 cursor-pointer"
                 onClick={clickListItemHandler}>Акции
             </li>
